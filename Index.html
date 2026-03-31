@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng dụng Quản lý Bảo trì Máy móc</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e6ed;
+        }
+        .tab {
+            padding: 12px 24px;
+            margin-right: 4px;
+            cursor: pointer;
+            border-radius: 6px 6px 0 0;
+            background-color: #f1f5f9;
+            color: #34495e;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .tab.active {
+            background-color: #3498db;
+            color: #ffffff;
+            border: none;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+        }
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            border-bottom: 2px solid #e0e6ed;
+            padding-bottom: 8px;
+        }
+        .card-content {
+            margin-top: 10px;
+        }
+        form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #34495e;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d9e6;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background-color: #ffffff;
+        }
+        th {
+            background-color: #3498db;
+            color: #ffffff;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e6ed;
+        }
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        .success-btn {
+            background-color: #27ae60;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        .success-btn:hover {
+            background-color: #219a51;
+        }
+        .warning-btn {
+            background-color: #e67e22;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        .warning-btn:hover {
+            background-color: #d35400;
+        }
+        .danger-btn {
+            background-color: #e74c3c;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        .danger-btn:hover {
+            background-color: #c0392b;
+        }
+        .primary-btn {
+            background-color: #3498db;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        .primary-btn:hover {
+            background-color: #2980b9;
+        }
+        button {
+            margin-right: 8px;
+        }
+        .search-bar {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .search-bar input {
+            flex-grow: 1;
+            margin-right: 10px;
+            padding: 10px 15px;
+            border-radius: 30px;
+            border: 1px solid #d1d9e6;
+            font-size: 14px;
+        }
+        .alert {
+            padding: 12px;
+            margin-bottom: 16px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ỨNG DỤNG QUẢN LÝ BẢO TRÌ MÁY MÓC</h1>
+            <p>Ứng dụng quản lý bảo trì máy móc đơn giản, chỉ chạy trên HTML</p>
+        </header>
+
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('dashboard')">Bảng điều khiển</div>
+            <div class="tab" onclick="showTab('equipment')">Quản lý máy móc</div>
+            <div class="tab" onclick="showTab('maintenance')">Bảo trì định kỳ</div>
+            <div class="tab" onclick="showTab('workorders')">Lệnh công việc</div>
+            <div class="tab" onclick="showTab('reports')">Báo cáo & Thống kê</div>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content">
+            <div class="card">
+                <h3 class="card-title">Tổng quan hệ thống</h3>
+                <div class="card-content">
+                    <p>Ứng dụng này được xây dựng để quản lý bảo trì máy móc, thiết bị trong doanh nghiệp. Hệ thống giúp theo dõi tình trạng máy móc, lập kế hoạch bảo trì định kỳ và quản lý lệnh công việc bảo trì.</p>
+                    
+                    <div class="search-bar">
+                        <input type="text" placeholder="Tìm kiếm máy móc..." id="searchInput">
+                        <button class="primary-btn" onclick="searchEquipment()">Tìm kiếm</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">Thống kê nhanh</h3>
+                <div class="card-content">
+                    <table>
+                        <tr>
+                            <td><strong>Tổng số máy móc: <span id="totalEquipment">15</span></strong></td>
+                            <td><strong>Cần bảo trì: <span id="pendingMaintenance">3</span></strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Nhân viên kỹ thuật: <span id="techStaff">6</span></strong></td>
+                            <td><strong>Kho phụ tùng: <span id="spareParts">120</span> mục</strong></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Equipment Management Tab -->
+        <div id="equipment" class="tab-content" style="display: none;">
+            <div class="card">
+                <h3 class="card-title">Danh sách máy móc</h3>
+                <div class="card-content">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Tìm kiếm máy móc..." id="equipmentSearch">
+                        <button class="primary-btn" onclick="searchEquipmentTable()">Tìm kiếm</button>
+                    </div>
+                    
+                    <table id="equipmentTable">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Mã thiết bị</th>
+                                <th>Tên thiết bị</th>
+                                <th>Loại</th>
+                                <th>Vị trí</th>
+                                <th>Tình trạng</th>
+                                <th>Tác vụ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>M-001</td>
+                                <td>Máy CNC X300</td>
+                                <td>Máy cắt</td>
+                                <td>Xưởng A - L1</td>
+                                <td><span style="color: #27ae60; font-weight: 600;">Đang hoạt động</span></td>
+                                <td>
+                                    <button class="primary-btn" onclick="editEquipment(1)">Sửa</button>
+                                    <button class="danger-btn" onclick="deleteEquipment(1)">Xóa</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>M-002</td>
+                                <td>Máy Ép Thủy Lực Y200</td>
+                                <td>Máy ép</td>
+                                <td>Xưởng A - L2</td>
+                                <td><span style="color: #e67e22; font-weight: 600;">Cần bảo trì</span></td>
+                                <td>
+                                    <button class="primary-btn" onclick="editEquipment(2)">Sửa</button>
+                                    <button class="danger-btn" onclick="deleteEquipment(2)">Xóa</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>M-003</td>
+                                <td>Máy Hàn Tự Động W150</td>
+                                <td>Máy hàn</td>
+                                <td>Xưởng B - L1</td>
+                                <td><span style="color: #27ae60; font-weight: 600;">Đang hoạt động</span></td>
+                                <td>
+                                    <button class="primary-btn" onclick="editEquipment(3)">Sửa</button>
+                                    <button class="danger-btn" onclick="deleteEquipment(3)">Xóa</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">Thêm máy móc mới</h3>
+                <div class="card-content">
+                    <form id="equipmentForm">
+                        <div class="form-group">
+                            <label for="equipmentCode">Mã thiết bị</label>
+                            <input type="text" id="equipmentCode" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="equipmentName">Tên thiết bị</label>
+                            <input type="text" id="equipmentName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="equipmentType">Loại thiết bị</label>
+                            <select id="equipmentType">
+                                <option value="may-cat">Máy cắt</option>
+                                <option value="may-ep">Máy ép</option>
+                                <option value="may-han">Máy hàn</option>
+                                <option value="may-pha">Máy pha</option>
+                                <option value="xin-nang">Xe nâng</option>
+                                <option value="khac">Khác</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="equipmentLocation">Vị trí</label>
+                            <input type="text" id="equipmentLocation" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="equipmentStatus">Tình trạng</label>
+                            <select id="equipmentStatus">
+                                <option value="active">Đang hoạt động</option>
+                                <option value="maintenance">Cần bảo trì</option>
+                                <option value="repair">Đang sửa chữa</option>
+                                <option value="idle">Đang chờ</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="equipmentDescription">Mô tả</label>
+                            <textarea id="equipmentDescription" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="success-btn" onclick="addEquipment()">Thêm thiết bị</button>
+                            <button type="button" class="warning-btn" onclick="clearForm()">Xóa trắng</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Maintenance Planning Tab -->
+        <div id="maintenance" class="tab-content" style="display: none;">
+            <div class="card">
+                <h3 class="card-title">Kế hoạch bảo trì định kỳ</h3>
+                <div class="card-content">
+                    <table id="maintenanceTable">
+                        <thead>
+                            <tr>
+                                <th>Mã thiết bị</th>
+                                <th>Tên thiết bị</th>
+                                <th>Loại bảo trì</th>
+                                <th>Chu kỳ (ngày)</th>
+                                <th>Ngày dự kiến</th>
+                                <th>Người phụ trách</th>
+                                <th>Tình trạng</th>
+                                <th>Tác vụ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>M-001</td>
+                                <td>Máy CNC X300</td>
+                                <td>Bảo trì hàng ngày</td>
+                                <td>1</td>
+                                <td>2025-06-01</td>
+                                <td>Nguyễn Văn A</td>
+                                <td><span style="color: #e67e22; font-weight: 600;">Chưa thực hiện</span></td>
+                                <td>
+                                    <button class="primary-btn" onclick="startMaintenance(1)">Bắt đầu</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>M-002</td>
+                                <td>Máy Ép Thủy Lực Y200</td>
+                                <td>Bảo trì định kỳ</td>
+                                <td>7</td>
+                                <td>2025-06-07</td>
+                                <td>Trần Văn B</td>
+                                <td><span style="color: #27ae60; font-weight: 600;">Đã hoàn thành</span></td>
+                                <td>
+                                    <button class="warning-btn" onclick="viewMaintenance(2)">Xem</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>M-003</td>
+                                <td>Máy Hàn Tự Động W150</td>
+                                <td>Bảo trì hàng tuần</td>
+                                <td>30</td>
+                                <td>2025-07-01</td>
+                                <td>Lê Văn C</td>
+                                <td><span style="color: #e67e22; font-weight: 600;">Chưa thực hiện</span></td>
+                                <td>
+                                    <button class="warning-btn" onclick="viewMaintenance(3)">Xem</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">Thêm kế hoạch bảo trì</h3>
+                <div class="card-content">
+                    <form id="maintenanceForm">
+                        <div class="form-group">
+                            <label for="maintEquipment">Chọn thiết bị</label>
+                            <select id="maintEquipment">
+                                <option value="1">M-001 - Máy CNC X300</option>
+                                <option value="2">M-002 - Máy Ép Thủy Lực Y200</option>
+                                <option value="3">M-003 - Máy Hàn Tự Động W150</option>
+                            </select>
+                        </div>
